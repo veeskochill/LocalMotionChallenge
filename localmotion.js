@@ -14,14 +14,40 @@ function showProps(obj, objName) {
 var flag = false
 var dest  = 2
 var convert = 'ABCDEFG'
+
+var start_flag = true
+
+var dests = [0,1,2,3,4]
+
+
 function turn(vehicles,peoples,buildings){
    //documentation can be found in the source
    //Good luck :)
     //console.log(Object.getOwnPropertyNames(buildings[0]))
-  //  if(flag == false)
-//    {
-        vehicles[4].moveTo(buildings[dest])
-  //  }
+    //init to some dest
+    for(var vid in vehicles)
+    {
+        vehicles[vid].moveTo(buildings[dests[vid]])
+    }
+    
+    //when arrive at dest
+    //pick new dest
+    for(var vid in vehicles)
+    {
+        if(vehicles[vid].x == buildings[dests[vid]].x && vehicles[vid].y == buildings[dests[vid]].y)
+            for(var pid in peoples)
+            {
+                if(peoples[pid].origin == buildings[dests[vid]].name)
+                {
+                    vehicles[vid].pick(peoples[pid])
+                    dests[vid] = convert.indexOf(peoples[pid].destination)
+                    break
+                }
+            }
+    }
+    
+    
+    /*
     if(vehicles[4].x == buildings[dest].x && vehicles[4].y == buildings[dest].y)
     {
         flag = true
@@ -44,5 +70,6 @@ function turn(vehicles,peoples,buildings){
 //        vehicles[4].moveTo(buildings[1])
   //  }
    // console.log(peoples[4].time, peoples[4].time0);
-        
+    }
+    */
 }
