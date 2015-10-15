@@ -18,6 +18,11 @@ function compare_dest(a,b)
 }
 */
 
+function distance(pos1, pos2)
+{
+  return Math.pow(Math.pow(pos1.x - pos2.x,2) + Math.pow(pos1.y - pos2.y,2), 0.5)
+}
+
 function turn(vehicles,peoples,buildings)
 {
     for(var vid in vehicles)
@@ -35,6 +40,7 @@ function turn(vehicles,peoples,buildings)
             var new_dest = 0
             var dest_count = {}
             var local_max = 0
+            var dist_list = {}
 
             //pickup the largest group travelling in the same direction
             for(var pid in peoples)
@@ -44,25 +50,34 @@ function turn(vehicles,peoples,buildings)
                    // console.log(dest_count[peoples[pid].destination])
                     if(peoples[pid].destination in dest_count)
                     {
-                      console.log("WINNER WINNER CHICKEN DINNER")
+                    //  console.log("WINNER WINNER CHICKEN DINNER")
                       dest_count[peoples[pid].destination].push(peoples[pid])
                     }
                     else
                     {
+                      dist_list[peoples[pid].destination] = distance(vehicles[vid],buildings[convert.indexOf(peoples[pid].destination)])
+                     // console.log(dist_list[peoples[pid].destination])
                       local_max = peoples[pid].destination
                       dest_count[peoples[pid].destination] = [peoples[pid]]
                     }
                 }
-                
             }
+
+            dest_value = {}
+            if(local_max != 0)
+              for(var did in dest_count)
+              {
+                 dest_value[did] = dest_count[did].length/dist_list[did]
+                 console.log(dest_value[did])
+              }
 
             if(local_max != 0)
             {
               //  console.log("NOT ZERO")
-              for(var did in dest_count)
+              for(var did in dest_value)
               {
                 //  console.log(dest_count[did])
-                if(dest_count[did].length > dest_count[local_max].length)
+                if(dest_value[did] > dest_value[local_max])
                 {
                  // console.log(dest_count[did].length)
                   local_max = did
