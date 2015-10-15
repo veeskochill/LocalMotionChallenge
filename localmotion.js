@@ -18,9 +18,14 @@ function compare_dest(a,b)
 }
 */
 
-function distance(pos1, pos2)
+function real_distance(pos1, pos2)
 {
   return Math.pow(Math.pow(pos1.x - pos2.x,2) + Math.pow(pos1.y - pos2.y,2), 0.5)
+}
+
+function distance(pos1, pos2)
+{
+  return Math.abs(pos1.x - pos2.x) + Math.abs(pos1.y - pos2.y)
 }
 
 function turn(vehicles,peoples,buildings)
